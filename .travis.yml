@@ -1,0 +1,22 @@
+language: python
+
+sudo: false
+
+addons:
+  apt:
+    packages:
+
+python:
+  - "2.7"
+
+install:
+  - curl http://hydra.nixos.org/build/17897588/download/3/nix-1.8.tar.bz2 | tar jx
+  - cd nix-1.8
+  - ./configure --prefix=$HOME/nix --localstatedir=$HOME/nix/state --with-store-dir=$HOME/nix/store
+  - make
+  - make install
+  - export PATH="$HOME/.nix-profile/bin:$PATH"
+
+script:
+  - nix-env -i R
+  - R --version
